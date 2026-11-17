@@ -8,25 +8,26 @@
     <body onload="init()">
         <script src="header.js"></script>
 
-        <div class="left">
+        <div class="left" id="filters">
             <input type="button" id="clearFilters" value="Clear Filters">
             <br><br>
             <span id="filtersAppliedLabel">0 filters applied</span>
 
             <h2>Location</h2>
-                <ul>
+                <ul id="locationList">
                     <li><input type="checkbox">Riverside South <span class="filterCount">12</span></li>
-                    <li><input type="checkbox">Stittsville<span class="filterCount">2</span></li>
+                    <li><input type="checkbox">Stittsville<span class="filterCount">12</span></li>
                 </ul>
 
             <h2>Item Type</h2>
-                <ul>
+                <ul id="typeList">
                     <li><input type="checkbox">Book <span class="filterCount">12</span></li>
                     <li><input type="checkbox">Audio Book <span class="filterCount">12</span></li>
                     <li><input type="checkbox">DVD <span class="filterCount">12</span></li>
                     <li><input type="checkbox">Blu-ray <span class="filterCount">12</span></li>
                     <li><input type="checkbox">Other <span class="filterCount">12</span></li>
                 </ul>
+            
             <h2>Section</h2>
             <div class="center">
                 <input type="search" id="filterSearch" placeholder="Search sections...">
@@ -39,7 +40,8 @@
 
         <div id="results">
             <div class="center">
-                123 results found
+                <span id="numberFoundLabel">123 results found</span>
+                
                 <span id="pageList">
                     <input type="button" class="pageButton" value="<<">
                     <input type="button" class="pageButton" value="<">
@@ -54,12 +56,16 @@
                 <span class="right">
                     Sort by:
                     <select id="sortDropdown">
+                        <option value="titleAZ">Title A-Z</option>
+                        <option value="titleZA">Title Z-A</option>
                         <option value="authorAZ">Author A-Z</option>
                         <option value="authorZA">Author Z-A</option>
+                        <option value="priceLH">Price Low-High</option>
+                        <option value="priceHL">Price High-Low</option>
                     </select>  
                 </span>
             </div>
-            <span class="right" id="updatedLabel"> Last updated on 2026/11/17 12:05 AM</span>
+            <span class="right" id="updatedLabel"> Last updated on 2026/11/17 4:53 PM</span>
 
             <br><br>
             <ul id="resultsList">
