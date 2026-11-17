@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Search</title>
+        <link href="./stylesheet.css" rel="stylesheet">
+    </head>
+
+    <body onload="init()">
+        <script src="header.js"></script>
+
+        <div class="left">
+            <input type="button" id="clearFilters" value="Clear Filters">
+            <br><br>
+            <span id="filtersAppliedLabel">0 filters applied</span>
+
+            <div id="filtersList">
+                <h2>Location</h2>
+                <ul>
+                    <li><input type="checkbox">Riverside South <span class="filterCount">12</span></li>
+                    <li><input type="checkbox">Stittsville<span class="filterCount">2</span></li>
+                </ul>
+
+                <h2>Item Type</h2>
+                <ul>
+                    <li><input type="checkbox">etc <span class="filterCount">12</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="results">
+            <div class="center">
+                123 results found
+                <span id="pageList">
+                    <input type="button" class="pageButton" value="<<">
+                    <input type="button" class="pageButton" value="<">
+                    <input type="button" class="pageButton" value="1">
+                    <input type="button" class="pageButton" value="2">
+                    <input type="button" class="pageButton" value="3">
+                    <input type="button" class="pageButton" value="4">
+                    <input type="button" class="pageButton" value="5">
+                    <input type="button" class="pageButton" value=">">
+                    <input type="button" class="pageButton" value=">>">
+                </span>
+                <span class="right">
+                    Sort by:
+                    <select id="sortDropdown">
+                        <option value="authorAZ">Author A-Z</option>
+                        <option value="authorZA">Author Z-A</option>
+                    </select>  
+                </span>
+            </div>
+            <span class="right" id="updatedLabel"> Last updated on 2026/11/17 12:05 AM</span>
+
+            <br><br>
+            <ul id="resultsList">
+                <li class="result">
+                    lasjdkaldsjldklsdj<br> lasjdklasjdksdl <br> alksjhalskd
+                </li>
+            </ul>
+        </div>
+        <script src="./search.js"></script>
+    </body>
+</html>
