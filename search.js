@@ -34,6 +34,15 @@ function strip(text) {
 	return text.trim().replace("- ", "").replace("-", " ").replace(/[^a-zA-Z0-9 ]/g, "");
 }
 
+function getFirstAuthor(item) {
+	if (item.author.length === 0) {
+		return "";
+	}
+	let name = item.author[0].split(" ");
+	name = name[name.length - 1];
+	return name;
+}
+
 function createItem(item) {
 	let li = document.createElement("li");
 	li.className = "item";
@@ -102,7 +111,46 @@ function update(page = 0) {
 
 	document.getElementById("numberFoundLabel").textContent = filtered.length + " results found";
 
-	// sort by the dropdown
+	filtered = filtered.sort((a, b) => {
+		let comp1, comp2, sign;
+		switch (document.getElementById("sortDropdown").value) {
+			case "titleAZ":
+				comp1 = a.title;
+				comp2 = b.title;
+				sign = 1;
+				break;
+			case "titleZA":
+				comp1 = a.title;
+				comp2 = b.title;
+				sign = -1;
+				break;
+			case "authorAZ":
+				comp1 = getFirstAuthor(a);
+				comp2 = getFirstAuthor(b);
+				sign = 1;
+				break;
+			case "authorZA":
+				comp1 = getFirstAuthor(a);
+				comp2 = getFirstAuthor(b);
+				sign = -1;
+				break;
+			case "priceLH":
+				comp1 = a.cost;
+				comp2 = b.cost;
+				sign = 1;
+				break;
+			case "priceHL":
+				comp1 = a.cost;
+				comp2 = b.cost;
+				sign = -1;
+				break;
+		}
+		if (typeof comp1 === "string") {
+			return strip(comp1).localeCompare(strip(comp2))*sign;
+		} else {
+			return (comp1 - comp2)*sign;
+		}
+	});
 
 	// update the filter counts
 	// hide/unhide filters with 0?
@@ -123,7 +171,8 @@ function init() {
 	document.getElementById("clearFilters").addEventListener("click", clearFilters);
 	document.getElementById("topButton").addEventListener("click", () => {
 		window.scrollTo(0, 0);
-	})
+	});
+	document.getElementById("sortDropdown").addEventListener("change", update);
 
 	// add the section filters
 	let sections = new Set();
