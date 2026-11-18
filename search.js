@@ -30,12 +30,18 @@ function clearFilters() {
 	update();
 }
 
-function createItem(item) {
-	
-}
-
 function strip(text) {
 	return text.trim().replace("- ", "").replace("-", " ").replace(/[^a-zA-Z0-9 ]/g, "");
+}
+
+function createItem(item) {
+	let li = document.createElement("li");
+	li.className = "item";
+	// add defaults for missing authors
+	li.textContent = item.title + "\n" + item.author +
+		"\n" + item.type + "\n" + item.section + "\n" + item.location + 
+		"\n$" + item.cost.toFixed(2) + "\n" + item.stock + " in stock";
+	return li;
 }
 
 function update(page = 0) {
@@ -78,14 +84,23 @@ function update(page = 0) {
 			}
 			if (exit) {continue;}
 		}
-		if (params.get("search") !== null && params.get("search").trim() !== "" &&
-				!RegExp(strip(params.get("search")), "i").test(strip(item.title))) {
-			continue;
+		if (params.get("search") !== null) {
+			let regex = RegExp(strip(params.get("search")), "i");
+			let found = regex.test(strip(item.title));
+			if (!found) {
+				for (let author of item.author) {
+					if (regex.test(strip(author))) {
+						found = true;
+						break;
+					}
+				}
+			}
+			if (!found) {continue;}
 		}
 		filtered.push(item);
 	}
 
-	document.getElementById("numberFoundLabel").textContent = filtered.length + " results found"
+	document.getElementById("numberFoundLabel").textContent = filtered.length + " results found";
 
 	// sort by the dropdown
 
@@ -96,10 +111,7 @@ function update(page = 0) {
 	let resultsList = document.getElementById("resultsList");
 	resultsList.innerHTML = "";
 	for (item of filtered) {
-		let li = document.createElement("li");
-		li.className = "item";
-		li.textContent = item.title + "\n" + item.type + "\n" + item.section;
-		resultsList.appendChild(li);
+		resultsList.appendChild(createItem(item));
 	}
 
 	// update and connect the page navigation buttons
