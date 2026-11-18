@@ -1,5 +1,5 @@
 const items = 
-[{"title": "1984", "author": ["George Orwell"], "section": ["Fiction"], "type": "Book", "cost": 4.53, "stock": 2, "location": "Riverside South"}, {"title": "1984", "author": ["George Orwell"], "section": ["Fiction"], "type": "Book", "cost": 8.51, "stock": 3, "location": "Stittsville"}, {"title": "Percy Jackson and the Lightning Thief", "author": ["Rick Riordan"], "section": ["Fiction"], "type": "Book", "cost": 4.73, "stock": 1, "location": "Riverside South"}, {"title": "Percy Jackson and the Lightning Thief", "author": ["Rick Riordan"], "section": ["Fiction"], "type": "Book", "cost": 9.9, "stock": 2, "location": "Stittsville"}, {"title": "The Martian", "author": ["Andy Weir"], "section": ["Fiction", "Science Fiction"], "type": "Book", "cost": 4.61, "stock": 3, "location": "Stittsville"}, {"title": "The Three-Body Problem", "author": ["Liu Cixin"], "section": ["Fiction", "Science Fiction"], "type": "Book", "cost": 6.67, "stock": 2, "location": "Stittsville"}, {"title": "Star Wars - A New Hope", "author": [""], "section": ["Fiction", "Science Fiction"], "type": "DVD", "cost": 9.22, "stock": 3, "location": "Riverside South"}]
+[{"title": "1984", "author": ["George Orwell"], "section": ["Fiction", "test"], "type": "Book", "cost": 4.53, "stock": 2, "location": "Riverside South"}, {"title": "1984", "author": ["George Orwell"], "section": ["Fiction"], "type": "Book", "cost": 8.51, "stock": 3, "location": "Stittsville"}, {"title": "Percy Jackson and the Lightning Thief", "author": ["Rick Riordan"], "section": ["Fiction"], "type": "Book", "cost": 4.73, "stock": 1, "location": "Riverside South"}, {"title": "Percy Jackson and the Lightning Thief", "author": ["Rick Riordan"], "section": ["Fiction"], "type": "Book", "cost": 9.9, "stock": 2, "location": "Stittsville"}, {"title": "The Martian", "author": ["Andy Weir"], "section": ["Fiction", "Science Fiction"], "type": "Book", "cost": 4.61, "stock": 3, "location": "Stittsville"}, {"title": "The Three-Body Problem", "author": ["Liu Cixin"], "section": ["Fiction", "Science Fiction"], "type": "Book", "cost": 6.47, "stock": 2, "location": "Stittsville"}, {"title": "Star Wars - A New Hope", "author": [""], "section": ["Fiction", "Science Fiction"], "type": "DVD", "cost": 9.22, "stock": 3, "location": "Riverside South"}]
 ;
 // i forgot you cant read local files so im leaving this here for now
 
@@ -12,7 +12,7 @@ function addClickEvents() {
 					if (e.target.nodeName === "LI" || e.target.nodeName === "SPAN") {
 						li.children[0].children[0].checked = !li.children[0].children[0].checked;
 					}
-					update();
+					update(0, child.id);
 				});
 			}
 		}
@@ -53,7 +53,7 @@ function createItem(item) {
 	return li;
 }
 
-function update(page = 0) {
+function update(page = 0, checkboxSectionId = "") {
 	let params = new URLSearchParams(document.location.search);
 	if (params.get("search") !== null) {document.getElementById("search").value = params.get("search");}
 
@@ -152,14 +152,34 @@ function update(page = 0) {
 		}
 	});
 
-	// update the filter counts
-	// hide/unhide filters with 0?
+	let counts = {};
+	for (let child of document.getElementById("filters").children) {
+		if (child.nodeName === "UL") {
+			for (let li of child.children) {
+				counts[li.children[0].textContent.trim()] = 0;
+			}
+		}
+	}
 
-	// add items into resultsList with class=result
 	let resultsList = document.getElementById("resultsList");
 	resultsList.innerHTML = "";
 	for (item of filtered) {
+		counts[item.location]++;
+		counts[item.type]++;
+		for (section of item.section) {counts[section]++;}
+
 		resultsList.appendChild(createItem(item));
+	}
+
+	for (let child of document.getElementById("filters").children) {
+		if (child.nodeName === "UL" && checkboxSectionId !== child.id) {
+			for (let li of child.children) {
+				li.children[1].textContent = counts[li.children[0].textContent.trim()]
+				if (child.id === "sectionList") {
+					li.hidden = counts[li.children[0].textContent.trim()] === 0;
+				}
+			}
+		}
 	}
 
 	// update and connect the page navigation buttons
