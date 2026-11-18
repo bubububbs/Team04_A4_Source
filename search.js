@@ -109,6 +109,9 @@ function init() {
 	console.log(items);
 
 	document.getElementById("clearFilters").addEventListener("click", clearFilters);
+	document.getElementById("topButton").addEventListener("click", () => {
+		window.scrollTo(0, 0);
+	})
 
 	// add the section filters
 	let sections = new Set();

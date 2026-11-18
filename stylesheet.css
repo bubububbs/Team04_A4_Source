@@ -106,3 +106,10 @@ input[type="checkbox"] {
     color: white;
     background-color: #AA0000;
 }
+
+#topButton {
+    position: fixed;
+    bottom: 0.5%;
+    right: 0px;
+    font-size: larger;
+}
