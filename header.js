@@ -1,9 +1,16 @@
 function search() {
-    let url = "search.html"
-    if (document.getElementById("search").value !== "") {
-        url += "?search=" + encodeURIComponent(document.getElementById("search").value);
+    const page = "search.html";
+    let url = new URL(page, document.location.href);
+    if (document.getElementById("search").value.trim() !== "") {
+        url.searchParams.set("search", document.getElementById("search").value);
     }
-    document.location.href = url;
+
+    if (document.location.href.includes(page)) {
+        history.pushState({}, "", url);
+        update();
+    } else {
+        document.location.href = url;
+    }
 }
 
 document.write(`
