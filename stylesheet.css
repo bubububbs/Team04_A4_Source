@@ -10,6 +10,7 @@ html {
 #logo {
     margin-top:0.5%;
     margin-bottom:0.5%;
+    width: 26%
 }
 
 header {
@@ -34,7 +35,7 @@ header {
 }
 
 #filterSearch {
-    width: 84%;
+    width: 93%;
     min-height: 20px;
 }
 
@@ -44,7 +45,6 @@ header {
 }
 
 #links {
-    float: right;
     margin-left: auto;
 }
 
@@ -62,10 +62,18 @@ ul {
     float: right;
 }
 
+label {
+    width: 100%;
+}
+
+input[type="checkbox"] {
+    margin-right: 2%;
+}
+
 #results {
     float:left;
-    width:73%;
-    margin-left:2%;
+    width:74%;
+    margin-left:1%;
 }
 
 #pageList {
@@ -75,7 +83,7 @@ ul {
 }
 
 .pageButton {
-    width: 9%;
+    width: 6%;
 }
 
 .right {
@@ -86,9 +94,11 @@ ul {
     color: gray;
 }
 
-.result {
+.item {
     border-style: solid;
     border-width: 1px;
+    white-space: pre-line;
+    padding: 0.5%
 }
 
 #clearFilters {
