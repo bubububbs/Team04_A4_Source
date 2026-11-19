@@ -7,8 +7,12 @@ function addClickEvents() {
 			for (let li of child.children) {
 				li.addEventListener("click", (e) => {
 					// extend click to the white space on rightside
-					if (e.target.nodeName === "LI" || e.target.nodeName === "SPAN") {
+					if (e.target.nodeName !== "INPUT") {
 						li.children[0].children[0].checked = !li.children[0].children[0].checked;
+					}
+					// prevent double click event
+					if (e.target.nodeName === "LABEL") {
+						e.preventDefault();
 					}
 					let id = li.children[0].children[0].checked ? child.id : "";
 					update(1, id);
