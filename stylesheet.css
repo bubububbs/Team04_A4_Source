@@ -86,13 +86,23 @@ input[type="checkbox"] {
     margin-left:1%;
 }
 
+#numberFound {
+    width: 10%;
+}
+
 #pageList {
     margin: auto;
     width: 50%;
 }
 
 .pageButton {
-    width: 6%;
+    width: 7%;
+    margin-left: 1%;
+}
+
+.emphasize {
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 #updatedLabel {

@@ -1,3 +1,6 @@
+const itemsPerPage = 17;
+const numberButtons = 5;
+
 const items = 
 // [{"title": "1984", "author": ["George Orwell"], "section": ["Fiction"], "type": "Book", "cost": 6.26, "stock": 1, "location": "Stittsville"}, {"title": "Percy Jackson and the Olympians - The Lightning Thief", "author": ["Rick Riordan"], "section": ["Fiction"], "type": "Book", "cost": 9.26, "stock": 2, "location": "Riverside South"}, {"title": "Percy Jackson and the Olympians - The Lightning Thief", "author": ["Rick Riordan"], "section": ["Fiction"], "type": "Book", "cost": 4.08, "stock": 2, "location": "Stittsville"}, {"title": "The Martian", "author": ["Andy Weir"], "section": ["Fiction", "Science Fiction"], "type": "Book", "cost": 4.01, "stock": 2, "location": "Riverside South"}, {"title": "The Martian", "author": ["Andy Weir"], "section": ["Fiction", "Science Fiction"], "type": "Book", "cost": 9.96, "stock": 3, "location": "Stittsville"}, {"title": "The Three-Body Problem", "author": ["Liu Cixin"], "section": ["Fiction", "Science Fiction"], "type": "Book", "cost": 8.57, "stock": 1, "location": "Riverside South"}, {"title": "Star Wars - A New Hope", "author": [""], "section": ["Fiction", "Science Fiction"], "type": "DVD", "cost": 4.16, "stock": 3, "location": "Stittsville"}];
 
@@ -14,7 +17,7 @@ function addClickEvents() {
 						li.children[0].children[0].checked = !li.children[0].children[0].checked;
 					}
 					let id = li.children[0].children[0].checked ? child.id : "";
-					update(0, id);
+					update(1, id);
 				});
 			}
 		}
@@ -113,7 +116,17 @@ function createItem(item) {
 	return li;
 }
 
-function update(page = 0, checkboxSectionId = "") {
+function createPageButton(value, page, isCurrent = false){
+	let button = document.createElement("input");
+	button.className = "pageButton";
+	button.type = "button";
+	button.value = value;
+	if (isCurrent) {button.classList.add("emphasize"); }
+	button.addEventListener("click", () => {update(page); });
+	return button;
+}
+
+function update(pageNum = 1, checkboxSectionId = "") {
 	let params = new URLSearchParams(document.location.search);
 	if (params.get("search") !== null) {document.getElementById("search").value = params.get("search");}
 
@@ -174,11 +187,6 @@ function update(page = 0, checkboxSectionId = "") {
 	filtered = filtered.sort((a, b) => {
 		let comp1, comp2, sign;
 		switch (document.getElementById("sortDropdown").value) {
-			case "titleAZ":
-				comp1 = a.title;
-				comp2 = b.title;
-				sign = 1;
-				break;
 			case "titleZA":
 				comp1 = a.title;
 				comp2 = b.title;
@@ -204,6 +212,11 @@ function update(page = 0, checkboxSectionId = "") {
 				comp2 = b.cost;
 				sign = -1;
 				break;
+			case "titleAZ":
+			default:
+				comp1 = a.title;
+				comp2 = b.title;
+				sign = 1;
 		}
 		if (typeof comp1 === "string") {
 			return strip(comp1).localeCompare(strip(comp2))*sign;
@@ -223,11 +236,14 @@ function update(page = 0, checkboxSectionId = "") {
 
 	let resultsList = document.getElementById("resultsList");
 	resultsList.innerHTML = "";
-	for (item of filtered) {
+	for ([index, item] of filtered.entries()) {
 		counts[item.location]++;
 		counts[item.type]++;
 		for (section of item.section) {counts[section]++;}
-		resultsList.appendChild(createItem(item));
+
+		if ((pageNum-1)*itemsPerPage <= index && index < pageNum*itemsPerPage) {
+			resultsList.appendChild(createItem(item));
+		}
 	}
 
 	document.getElementById("noResultsFound").hidden = filtered.length != 0;
@@ -251,7 +267,25 @@ function update(page = 0, checkboxSectionId = "") {
 	}
 	searchFilters(false);
 
-	// update and connect the page navigation buttons
+	let pageList = document.getElementById("pageList");
+	let pageCount = Math.ceil(filtered.length/itemsPerPage)
+	pageList.innerHTML = "";
+	if (filtered.length == 0) {return; }
+	pageList.appendChild(createPageButton("<<", 1));
+	pageList.appendChild(createPageButton("<", Math.max(pageNum - 1, 1)));
+	if (pageCount <= numberButtons) {
+		for (let i = 1; i <= pageCount; i++) {
+			pageList.appendChild(createPageButton(i, i, i == pageNum));
+		}
+	} else {
+		let startIndex = Math.max(1, pageNum - Math.floor(numberButtons/2));
+		if (startIndex + numberButtons > pageCount) {startIndex = pageCount - numberButtons + 1; }
+		for (let i = 0; i < numberButtons; i++) {
+			pageList.appendChild(createPageButton(startIndex+i, startIndex+i, (startIndex+i) == pageNum));
+		}
+	}
+	pageList.appendChild(createPageButton(">", Math.min(pageNum + 1, pageCount)));
+	pageList.appendChild(createPageButton(">>", pageCount));
 }
 
 function init() {
@@ -275,7 +309,7 @@ function init() {
 	document.getElementById("topButton").addEventListener("click", () => {
 		window.scrollTo(0, 0);
 	});
-	document.getElementById("sortDropdown").addEventListener("change", update);
+	document.getElementById("sortDropdown").addEventListener("change", () => {update(); });
 
 	document.getElementById("filterSearch").addEventListener("change", searchFilters);
 	document.getElementById("filterSearch").addEventListener("keydown", (e) => {
