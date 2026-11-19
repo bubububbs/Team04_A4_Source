@@ -11,7 +11,7 @@
         <div class="left" id="filters">
             <input type="button" id="clearFilters" value="Clear Filters">
             <br><br>
-            <span id="filtersAppliedLabel">0 filters applied</span>
+            <span id="filtersApplied">0 filters applied</span>
 
             <h2>Location</h2>
                 <ul id="locationList">
@@ -69,12 +69,12 @@
                 <input type="image" id="filterImg" src="./searchIcon.png">
             </div>
             <ul id="sectionList"></ul>
-            <span id="noSectionsFoundLabel" hidden="true">No sections were found</span>
+            <span id="noSectionsFound" hidden="true">No sections were found</span>
         </div>
 
         <div id="results">
             <div class="center">
-                <span id="numberFoundLabel">123 results found</span>
+                <span id="numberFound">123 results found</span>
                 
                 <span id="pageList">
                     <input type="button" class="pageButton" value="<<">
@@ -107,6 +107,10 @@
                     lasjdkaldsjldklsdj<br> lasjdklasjdksdl <br> alksjhalskd
                 </li>
             </ul>
+            <div id="noResultsFound" hidden="true">
+                <h1>No results found</h1>
+                <div id="noResultsFeedback"></div>
+            </div>
         </div>
         <input type="button" id="topButton" value="↑ Top of Page">
         <script src="./search.js"></script>

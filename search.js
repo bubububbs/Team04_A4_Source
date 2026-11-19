@@ -42,7 +42,7 @@ function searchFilters(unhide = true) {
 		li.hidden = !strip(li.children[0].textContent).toLowerCase().includes(search);
 		if (!li.hidden) {filterUnhidden = true};
 	}
-	document.getElementById("noSectionsFoundLabel").hidden = filterUnhidden;
+	document.getElementById("noSectionsFound").hidden = filterUnhidden;
 }
 
 function strip(text) {
@@ -88,7 +88,7 @@ function update(page = 0, checkboxSectionId = "") {
 			filters.section.push(li.children[0].textContent.trim());
 		}
 	}
-	document.getElementById("filtersAppliedLabel").textContent =
+	document.getElementById("filtersApplied").textContent =
 		(filters.location.length + filters.type.length + filters.section.length) + " filters applied";
 
 	let filtered = [];
@@ -124,7 +124,7 @@ function update(page = 0, checkboxSectionId = "") {
 		filtered.push(item);
 	}
 
-	document.getElementById("numberFoundLabel").textContent = filtered.length + " results found";
+	document.getElementById("numberFound").textContent = filtered.length + " results found";
 
 	filtered = filtered.sort((a, b) => {
 		let comp1, comp2, sign;
@@ -182,9 +182,17 @@ function update(page = 0, checkboxSectionId = "") {
 		counts[item.location]++;
 		counts[item.type]++;
 		for (section of item.section) {counts[section]++;}
-
 		resultsList.appendChild(createItem(item));
 	}
+
+	document.getElementById("noResultsFound").hidden = filtered.length != 0;
+	let feedback = [];
+	if (params.get("search") !== null) { feedback.push("a query of \"" + params.get("search").trim() + "\"");}
+	if (filters.location.length != 0) { feedback.push("a location of " + filters.location.join(" or "));}
+	if (filters.type.length != 0) { feedback.push("an item type of " + filters.type.join(" or "));}
+	if (filters.section.length != 0) { feedback.push("a section of " + filters.section.join(" or "));}
+	document.getElementById("noResultsFeedback").textContent = "No items were found matching\n" + feedback.join(" and\n") + 
+		"\n\nTry changing your search query or removing some filters";
 
 	for (let child of document.getElementById("filters").children) {
 		if (child.nodeName === "UL" && checkboxSectionId !== child.id) {
