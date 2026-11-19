@@ -88,7 +88,6 @@ input[type="checkbox"] {
 
 #pageList {
     margin: auto;
-    text-align: center;
     width: 50%;
 }
 
@@ -101,6 +100,7 @@ input[type="checkbox"] {
 }
 
 .item {
+    display: flex;
     border-style: solid;
     border-width: 1px;
     white-space: pre-line;
@@ -108,7 +108,50 @@ input[type="checkbox"] {
     margin-bottom: 1.5%;
 }
 
+.itemImg {
+    width: 10%;
+}
+
+.itemText {
+    margin-left: 2%;
+    width: 100%;
+    display: grid;
+}
+
+.itemTitle {
+    margin-top: 1%;
+}
+
+.itemAuthor {
+    font-size: large;
+    color: gray;
+}
+
+.itemDetails {
+    font-size: larger;
+    font-weight: bold;
+    width: 100%;
+}
+
+.itemPrice {
+    width: 15%;
+}
+
+.itemStock {
+    width: 20%;
+    color: green;
+}
+
+.itemLocation {
+    width: 35%;
+}
+
+.itemType {
+    width: 25%;
+}
+
 #noResultsFound {
+    width: 75%;
     margin-top: 5%;
     text-align: center;
     font-size: large;

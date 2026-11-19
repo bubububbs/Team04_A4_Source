@@ -61,10 +61,55 @@ function getFirstAuthorName(item) {
 function createItem(item) {
 	let li = document.createElement("li");
 	li.className = "item";
-	// add defaults for missing authors
-	li.textContent = item.title + "\n" + item.author +
-		"\n" + item.type + "\n" + item.section + "\n" + item.location + 
-		"\n$" + item.cost.toFixed(2) + "\n" + item.stock + " in stock";
+
+	let img = document.createElement("img");
+	img.className = "itemImg";
+	img.alt = "no image found";
+	img.src = "./noImg.png";
+	li.appendChild(img);
+
+	let info = document.createElement("div");
+	info.className = "itemText";
+
+	let title = document.createElement("h2");
+	title.className = "itemTitle";
+	title.textContent = item.title;
+	info.appendChild(title);
+
+	let author = document.createElement("span");
+	author.className = "itemAuthor";
+	if (item.author[0] === "") {
+		author.textContent = "by nan";
+	} else {
+		author.textContent = "by " + item.author.join(", ");
+	}
+	info.appendChild(author);
+
+	let info2 = document.createElement("div");
+	info2.classList.add("center", "itemDetails");
+
+	let price = document.createElement("span");
+	price.className = "itemPrice";
+	price.textContent = "$" + item.cost.toFixed(2);
+	info2.appendChild(price);
+
+	let stock = document.createElement("span");
+	stock.className = "itemStock";
+	stock.textContent = item.stock + " in stock";
+	info2.appendChild(stock);
+
+	let location = document.createElement("span");
+	location.className = "itemLocation";
+	location.textContent = "📍 " + item.location;
+	info2.appendChild(location);
+
+	let type = document.createElement("span");
+	type.className = "itemType";
+	type.textContent = item.type;
+	info2.appendChild(type);
+
+	info.appendChild(info2);
+	li.appendChild(info);
 	return li;
 }
 
