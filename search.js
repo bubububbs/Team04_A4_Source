@@ -1,5 +1,5 @@
-const ITEMS_PER_PAGE = 17;
-const NUMBER_BUTTONS = 5;
+const ITEMS_PER_PAGE = 10;
+const NUMBER_BUTTONS = 3;
 
 function addClickEvents() {
 	for (let child of document.getElementById("filters").children) {
@@ -56,7 +56,7 @@ function getFirstAuthorName(item) {
 	}
 	let name = item.author[0].split(" ");
 	name = name[name.length - 1];
-	return name;
+	return name.toLowerCase();
 }
 
 function createItem(item) {
@@ -89,24 +89,34 @@ function createItem(item) {
 	let info2 = document.createElement("div");
 	info2.classList.add("center", "itemDetails");
 
+	let temp;
+
 	let price = document.createElement("span");
+	temp = document.createElement("span");
 	price.className = "itemPrice";
-	price.textContent = "$" + item.cost.toFixed(2);
+	temp.textContent = "$" + item.cost.toFixed(2);
+	price.appendChild(temp);
 	info2.appendChild(price);
 
 	let stock = document.createElement("span");
+	temp = document.createElement("span");
 	stock.className = "itemStock";
-	stock.textContent = item.stock + " in stock";
+	temp.textContent = item.stock + " in stock";
+	stock.appendChild(temp);
 	info2.appendChild(stock);
 
 	let location = document.createElement("span");
+	temp = document.createElement("span");
 	location.className = "itemLocation";
-	location.textContent = "📍 " + item.location;
+	temp.textContent = "📍 " + item.location;
+	location.appendChild(temp);
 	info2.appendChild(location);
 
 	let type = document.createElement("span");
+	temp = document.createElement("span");
 	type.className = "itemType";
-	type.textContent = item.type;
+	temp.textContent = item.type;
+	type.appendChild(temp);
 	info2.appendChild(type);
 
 	info.appendChild(info2);
@@ -132,7 +142,7 @@ async function update(pageNum = 1, checkboxSectionId = "") {
 	let items = await getItems();
 
 	let params = new URLSearchParams(document.location.search);
-	if (params.get("search") !== null) {document.getElementById("search").value = params.get("search");}
+	if (params.get("q") !== null) {document.getElementById("search").value = params.get("q");}
 
 	let filters = {location: [], type: [], section: []};
 	for (let li of document.getElementById("locationList").children) {
@@ -166,12 +176,13 @@ async function update(pageNum = 1, checkboxSectionId = "") {
 			for (let section of filters.section) {
 				if (item.section.includes(section)) {
 					exit = false;
+					break;
 				}
 			}
 			if (exit) {continue;}
 		}
-		if (params.get("search") !== null) {
-			let regex = RegExp(strip(params.get("search")), "i");
+		if (params.get("q") !== null) {
+			let regex = RegExp(strip(params.get("q")), "i");
 			let found = regex.test(strip(item.title));
 			if (!found) {
 				for (let author of item.author) {
@@ -252,7 +263,7 @@ async function update(pageNum = 1, checkboxSectionId = "") {
 
 	document.getElementById("noResultsFound").hidden = filtered.length != 0;
 	let feedback = [];
-	if (params.get("search") !== null) { feedback.push("a query of \"" + params.get("search").trim() + "\"");}
+	if (params.get("q") !== null) { feedback.push("a query of \"" + params.get("q").trim() + "\"");}
 	if (filters.location.length != 0) { feedback.push("a location of " + filters.location.join(" or "));}
 	if (filters.type.length != 0) { feedback.push("an item type of " + filters.type.join(" or "));}
 	if (filters.section.length != 0) { feedback.push("a section of " + filters.section.join(" or "));}

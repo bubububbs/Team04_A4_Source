@@ -1,8 +1,8 @@
 function search() {
-    const page = "/search";
+    const page = "search.html";
     let url = new URL(page, document.location.href);
     if (document.getElementById("search").value.trim() !== "") {
-        url.searchParams.set("search", document.getElementById("search").value);
+        url.searchParams.set("q", document.getElementById("search").value.trim());
     }
 
     if (document.location.href.includes(page)) {
@@ -22,15 +22,15 @@ document.write(`
     <input type="image" id="searchImg" src="./searchIcon.png">
 
     <div id="links">
-        <a href="/"> Home</a>
-        <a href="/search"> Search</a>
+        <a href="home.html"> Home</a>
+        <a href="search.html"> Search</a>
     </div>
 </header>
 <hr>
 `);
 
 document.getElementById("logo").addEventListener("click", () =>
-    {document.location.href = "/";})
+    {document.location.href = "home.html";})
 
 document.getElementById("search").addEventListener("keydown", (e) => {
     if (e.key === "Enter") {search();}});
