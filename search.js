@@ -188,15 +188,18 @@ async function update(pageNum = 1, checkboxSectionId = "") {
 			if (exit) {continue;}
 		}
 		if (params.get("q") !== null) {
-			let regex = RegExp(strip(params.get("q")), "i");
-			let found = regex.test(strip(item.title));
-			if (!found) {
+			let found = false;
+			for (let word of strip(params.get("q")).split(" ")) {
+				let regex = RegExp(word, "i");
+				found = regex.test(strip(item.title));
+				if (found) {break; }
 				for (let author of item.author) {
 					if (regex.test(strip(author))) {
 						found = true;
 						break;
 					}
 				}
+				if (found) {break; }
 			}
 			if (!found) {continue;}
 		}
