@@ -15,7 +15,7 @@ function addClickEvents() {
 						e.preventDefault();
 					}
 					let id = li.children[0].children[0].checked ? child.id : "";
-					update(1, id);
+					update(1, child.id);
 				});
 			}
 		}
@@ -37,7 +37,12 @@ function searchFilters(unhide = true) {
 	let search = strip(document.getElementById("filterSearch").value.toLowerCase());
 	let filterUnhidden = false;
 	for (let li of document.getElementById("sectionList").children) {
-		if (li.hidden && !unhide) {
+		if (li.children[0].children[0].checked) {
+			li.hidden = false;
+			filterUnhidden = true;
+			continue;
+		}
+		if ((li.hidden && !unhide)) {
 			continue;
 		}
 		li.hidden = !strip(li.children[0].textContent).toLowerCase().includes(search);
@@ -160,8 +165,8 @@ async function update(pageNum = 1, checkboxSectionId = "") {
 			filters.section.push(li.children[0].textContent.trim());
 		}
 	}
-	document.getElementById("filtersApplied").textContent =
-		(filters.location.length + filters.type.length + filters.section.length) + " filters applied";
+	let numFilters = filters.location.length + filters.type.length + filters.section.length;
+	document.getElementById("filtersApplied").textContent = numFilters + " filters applied";
 
 	let filtered = [];
 	for (let item of items) {
@@ -271,7 +276,7 @@ async function update(pageNum = 1, checkboxSectionId = "") {
 		"\n\nTry changing your search query or removing some filters";
 
 	for (let child of document.getElementById("filters").children) {
-		if (child.nodeName === "UL" && checkboxSectionId !== child.id) {
+		if (child.nodeName === "UL" && (checkboxSectionId !== child.id || numFilters === 0)) {
 			for (let li of child.children) {
 				li.children[1].textContent = counts[li.children[0].textContent.trim()]
 				if (child.id === "sectionList") {
