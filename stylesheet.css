@@ -143,13 +143,6 @@ input[type="checkbox"] {
     width: 100%;
 }
 
-.itemDetails span span {
-    background-color: rgb(235, 235, 235);
-    border-style: solid;
-    border-width: 1px;
-    padding: 2.5%;
-}
-
 .itemPrice {
     width: 15%;
 }
@@ -165,6 +158,30 @@ input[type="checkbox"] {
 
 .itemType {
     width: 25%;
+}
+
+.itemType span {
+    padding: 2.5%;
+}
+
+.typeBook {
+    background-color: rgba(255, 0, 0, 0.17);
+}
+
+.typeAudioBook {
+    background-color: rgba(255, 150, 0, 0.17);
+}
+
+.typeDVD {
+    background-color: rgba(0, 0, 255, 0.17);
+}
+
+.typeBlu-ray {
+    background-color: rgba(0, 150, 255, 0.17);
+}
+
+.typeOther {
+    background-color: rgba(255, 0, 255, 0.17);
 }
 
 #noResultsFound {

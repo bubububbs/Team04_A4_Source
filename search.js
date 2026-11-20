@@ -1,5 +1,5 @@
 const ITEMS_PER_PAGE = 10;
-const NUMBER_BUTTONS = 3;
+const NUMBER_BUTTONS = 5;
 
 function addClickEvents() {
 	for (let child of document.getElementById("filters").children) {
@@ -113,7 +113,7 @@ function createItem(item) {
 	let location = document.createElement("span");
 	temp = document.createElement("span");
 	location.className = "itemLocation";
-	temp.textContent = "📍 " + item.location;
+	temp.innerHTML = "&#128205; " + item.location;
 	location.appendChild(temp);
 	info2.appendChild(location);
 
@@ -121,6 +121,7 @@ function createItem(item) {
 	temp = document.createElement("span");
 	type.className = "itemType";
 	temp.textContent = item.type;
+	temp.className = "type" + item.type;
 	type.appendChild(temp);
 	info2.appendChild(type);
 
@@ -166,7 +167,7 @@ async function update(pageNum = 1, checkboxSectionId = "") {
 		}
 	}
 	let numFilters = filters.location.length + filters.type.length + filters.section.length;
-	document.getElementById("filtersApplied").textContent = numFilters + " filters applied";
+	document.getElementById("filtersApplied").textContent = numFilters + " filter" + (numFilters !== 1 ? "s" : "") + " applied";
 
 	let filtered = [];
 	for (let item of items) {
@@ -202,7 +203,7 @@ async function update(pageNum = 1, checkboxSectionId = "") {
 		filtered.push(item);
 	}
 
-	document.getElementById("numberFound").textContent = filtered.length + " results found";
+	document.getElementById("numberFound").textContent = filtered.length + " result" + (filtered.length !== 1 ? "s" : "") + " found";
 
 	filtered = filtered.sort((a, b) => {
 		let comp1, comp2, sign;

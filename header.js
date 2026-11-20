@@ -18,12 +18,11 @@ document.write(`
     <h1 id="logo" class="left">Re-Used Used Books
     </h1>
 
-    <input type="search" id="search" placeholder="Search for item">
-    <input type="image" id="searchImg" src="./searchIcon.png">
+    <input type="search" id="search" placeholder="Search the store inventory">
+    <input type="image" id="searchImg" alt="Search" src="./searchIcon.png">
 
-    <div id="links">
+    <div id="links" class="center">
         <a href="home.html"> Home</a>
-        <a href="search.html"> Search</a>
     </div>
 </header>
 <hr>

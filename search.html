@@ -66,7 +66,7 @@
             <h2>Section</h2>
             <div class="center">
                 <input type="search" id="filterSearch" placeholder="Search sections...">
-                <input type="image" id="filterImg" src="./searchIcon.png">
+                <input type="image" id="filterImg" alt="Search filters" src="./searchIcon.png">
             </div>
             <ul id="sectionList"></ul>
             <span id="noSectionsFound" hidden="true">No sections were found</span>
@@ -88,15 +88,16 @@
                     <input type="button" class="pageButton" value=">>">
                 </span>
                 <span class="right">
-                    Sort by:
-                    <select id="sortDropdown">
-                        <option value="titleAZ">Title A-Z</option>
-                        <option value="titleZA">Title Z-A</option>
-                        <option value="authorAZ">Author A-Z</option>
-                        <option value="authorZA">Author Z-A</option>
-                        <option value="priceLH">Price Low-High</option>
-                        <option value="priceHL">Price High-Low</option>
-                    </select>  
+                    <label>Sort by:
+                        <select id="sortDropdown">
+                            <option value="titleAZ">Title A-Z</option>
+                            <option value="titleZA">Title Z-A</option>
+                            <option value="authorAZ">Author A-Z</option>
+                            <option value="authorZA">Author Z-A</option>
+                            <option value="priceLH">Price Low-High</option>
+                            <option value="priceHL">Price High-Low</option>
+                        </select>
+                    </label>
                 </span>
             </div>
             <span class="right" id="updatedLabel"> Last updated on 2026/11/19 12:52 PM</span>
@@ -108,7 +109,7 @@
                 <div id="noResultsFeedback"></div>
             </div>
         </div>
-        <input type="button" id="topButton" value="↑ Top of Page">
+        <input type="button" id="topButton" value="&#8593; Top of Page">
         <script src="./search.js"></script>
     </body>
 </html>
