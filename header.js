@@ -21,9 +21,13 @@ document.write(`
     <input type="search" id="search" placeholder="Search the store inventory">
     <input type="image" id="searchImg" alt="Search" src="./searchIcon.png">
 
-    <div id="links" class="center">
+    <span id="links">
         <a href="home.html"> Home</a>
-    </div>
+        <a href="blank.html"> About</a>
+        <a href="blank.html"> Events</a>
+        <a href="blank.html"> Contact Us</a>
+        <a href="blank.html"> Shipping</a>
+    </span>
 </header>
 <hr>
 `);
