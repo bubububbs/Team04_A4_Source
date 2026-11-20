@@ -1,9 +1,17 @@
 # Team04_A4_Source
 
-## Dependencies: Node.js
+## Team members:
+- Abdulsamad Sanni
+- Cindy Liao
+- Felipe Martinez
+- Zaine Moodie
+- Zihan Zhou
+
+## Dependencies: 
+- Node.js
 
 ## How to open the website:
-- In a terminal, navigate to the folder containing `package.json`
+- In a terminal, navigate to the folder containing `package.json` (Team04_A4_Source)
 - Run the command `npm install` to install the dependencies
 - Run the command `node server.js` to start the server
 - Open the link printed in the terminal
