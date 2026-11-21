@@ -3,6 +3,7 @@ html {
 }
 
 header {
+    flex: 1;
     float: left;
     width: 100%;
 }
@@ -10,6 +11,18 @@ header {
 .center {
     display: flex;
     align-items: center;
+}
+
+header.center {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 8px 16px;
 }
 
 .left {
@@ -24,16 +37,16 @@ header {
 #logo {
     margin-top:0.5%;
     margin-bottom:0.5%;
-    width: 26%
+    width: auto
 }
 
-#search {
-    width: 48%;
+.search {
+    width: 50%;
     min-height: 35px;
     font-size: 1em;
 }
 
-#searchImg {
+.searchImg {
     margin-left: 0.25%;
     width: 2.5%;
 }
@@ -41,7 +54,7 @@ header {
 #links {
     display: inline;
     margin-left: auto;
-    width: 23%;
+    width: 28%;
 }
 
 #links a {
@@ -93,7 +106,7 @@ input[type="checkbox"] {
 }
 
 #numberFound {
-    width: 10%;
+    width: 12%;
 }
 
 #pageList {
